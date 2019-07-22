@@ -51,6 +51,7 @@ Resources:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       Parameters:
+        DashboardName: !Ref 'AWS::StackName'
         AlbModule: !GetAtt 'Alb.Outputs.StackName'
         FargateServiceModule: !GetAtt 'FargateService.Outputs.StackName'
         RdsAuroraServerlessModule: !GetAtt 'RdsAuroraServerless.Outputs.StackName'
