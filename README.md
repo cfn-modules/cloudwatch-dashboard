@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/cfn-modules/alerting.svg?branch=master)](https://travis-ci.org/cfn-modules/alerting)
-[![NPM version](https://img.shields.io/npm/v/@cfn-modules/alerting.svg)](https://www.npmjs.com/package/@cfn-modules/alerting)
+[![Build Status](https://travis-ci.org/cfn-modules/cloudwatch-dashboard.svg?branch=master)](https://travis-ci.org/cfn-modules/cloudwatch-dashboard)
+[![NPM version](https://img.shields.io/npm/v/@cfn-modules/cloudwatch-dashboard.svg)](https://www.npmjs.com/package/@cfn-modules/cloudwatch-dashboard)
 
 # cfn-modules: CloudWatch Dashboard
 
