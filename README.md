@@ -20,7 +20,7 @@ npm i @cfn-modules/cloudwatch-dashboard
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'cfn-modules example'
 Resources:
-  Alerting:
+  Dashboard:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       Parameters:
