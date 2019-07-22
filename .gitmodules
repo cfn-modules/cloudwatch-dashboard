@@ -1,0 +1,3 @@
+[submodule "node_modules/@cfn-modules/lambda-function"]
+	path = node_modules/@cfn-modules/lambda-function
+	url = https://github.com/cfn-modules/lambda-function.git
