@@ -1,0 +1,11 @@
+---
+language: python
+python:
+- '2.7'
+install:
+- 'pip install yamllint'
+- 'pip install cfn-lint'
+script:
+- 'yamllint module.yml'
+- 'cfn-lint module.yml'
+- 'grep -q "LICENSE-2.0" module.yml'
