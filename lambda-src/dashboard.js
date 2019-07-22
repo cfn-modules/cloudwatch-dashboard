@@ -2,7 +2,6 @@ const AWS = require('aws-sdk');
 const cloudwatch = new AWS.CloudWatch({apiVersion: '2010-08-01'});
 const response = require('cfn-response');
 
-
 function generateDashboard(event) {
   let widgets = [];
   if (event.ResourceProperties.AlbFullName) {
