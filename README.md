@@ -1,16 +1,16 @@
 [![Build Status](https://travis-ci.org/cfn-modules/alerting.svg?branch=master)](https://travis-ci.org/cfn-modules/alerting)
 [![NPM version](https://img.shields.io/npm/v/@cfn-modules/alerting.svg)](https://www.npmjs.com/package/@cfn-modules/alerting)
 
-# cfn-modules: Alerting
+# cfn-modules: CloudWatch Dashboard
 
-Central SNS topic that receives alerts from other [modules](https://www.npmjs.com/org/cfn-modules) and forwards them to your team via email, HTTP, or HTTPS.
+CloudWatch dashboard for ALB, Fargate Service, and RDS Aurora Serverless
 
 ## Install
 
 > Install [Node.js and npm](https://nodejs.org/) first!
 
 ```
-npm i @cfn-modules/alerting
+npm i @cfn-modules/cloudwatch-dashboard
 ```
 
 ## Usage
@@ -24,11 +24,11 @@ Resources:
     Type: 'AWS::CloudFormation::Stack'
     Properties:
       Parameters:
-        Email: 'team@org.com' # optional
-        HttpEndpoint: 'http://org.com/webhook' # optional
-        HttpsEndpoint: 'https://org.com/webhook' # optional
-        FallbackEmail: 'user@org.net' # optional
-      TemplateURL: './node_modules/@cfn-modules/alerting/module.yml'
+        DashboardName: 'My Dashboard'
+        AlbModule: !GetAtt 'Alb.Outputs.StackName' # optional
+        FargateServiceModule: !GetAtt 'FargateService.Outputs.StackName'
+        RdsAuroraServerlessModule: !GetAtt 'RdsAuroraServerless.Outputs.StackName'
+      TemplateURL: './node_modules/@cfn-modules/cloudwatch-dashboard/module.yml'
 ```
 
 ## Parameters
@@ -45,29 +45,29 @@ Resources:
   </thead>
   <tbody>
     <tr>
-      <td>Email</td>
-      <td>Email address that will receive alerts</td>
+      <td>DashboardName</td>
+      <td>The name for the dashboard</td>
+      <td></td>
+      <td>yes</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>AlbModule</td>
+      <td>Stack name of <a href="https://www.npmjs.com/package/@cfn-modules/alb">alb module</a></td>
       <td></td>
       <td>no</td>
       <td></td>
     </tr>
     <tr>
-      <td>HttpEndpoint</td>
-      <td>HTTP endpoint that will receive alerts via POST requests</td>
+      <td>FargateServiceModule</td>
+      <td>Stack name of <a href="https://www.npmjs.com/package/@cfn-modules/fargate-service">fargate-service module</a></td>
       <td></td>
       <td>no</td>
       <td></td>
     </tr>
     <tr>
-      <td>HttpsEndpoint</td>
-      <td>HTTPS endpoint that will receive alerts via POST requests (can be a marbot.io endpoint)</td>
-      <td></td>
-      <td>no</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>FallbackEmail</td>
-      <td>Email address that will receive alerts if alerts can not be delivered</td>
+      <td>RdsAuroraServerlessModule</td>
+      <td>Stack name of <a href="https://www.npmjs.com/package/@cfn-modules/rds-aurora-serverles">rds-aurora-serverles module</a></td>
       <td></td>
       <td>no</td>
       <td></td>
