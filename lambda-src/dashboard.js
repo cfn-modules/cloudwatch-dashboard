@@ -9,13 +9,13 @@ function generateDashboard(event) {
       type: 'metric',
       properties: {
         metrics: [
-          [{expression: '(5lb+5tg)/r*100', label: '5XX', id: '5r'}],
-          [{expression: '(4lb+4tg)/r*100', label: '4XX', id: '4r'}],
+          [{expression: '(m5lb+m5tg)/r*100', label: '5XX', id: 'm5r'}],
+          [{expression: '(m4lb+m4tg)/r*100', label: '4XX', id: 'm4r'}],
           ['AWS/ApplicationELB', 'RequestCount', 'LoadBalancer', event.ResourceProperties.AlbFullName, {stat: 'Sum', id: 'r', visible: false}],
-          ['.', 'HTTPCode_ELB_5XX_Count', '.', '.', {stat: 'Sum', id: '5lb', visible: false}],
-          ['.', 'HTTPCode_ELB_4XX_Count', '.', '.', {stat: 'Sum', id: '4lb', visible: false}],
-          ['.', 'HTTPCode_Target_5XX_Count', '.', '.', {stat: 'Sum', id: '5tg', visible: false}],
-          ['.', 'HTTPCode_Target_4XX_Count', '.', '.', {stat: 'Sum', id: '4tg', visible: false}]
+          ['.', 'HTTPCode_ELB_5XX_Count', '.', '.', {stat: 'Sum', id: 'm5lb', visible: false}],
+          ['.', 'HTTPCode_ELB_4XX_Count', '.', '.', {stat: 'Sum', id: 'm4lb', visible: false}],
+          ['.', 'HTTPCode_Target_5XX_Count', '.', '.', {stat: 'Sum', id: 'm5tg', visible: false}],
+          ['.', 'HTTPCode_Target_4XX_Count', '.', '.', {stat: 'Sum', id: 'm4tg', visible: false}]
         ],
         view: 'timeSeries',
         region: event.ResourceProperties.Region,
@@ -90,6 +90,22 @@ function generateDashboard(event) {
         'stacked': true,
         region: event.ResourceProperties.Region,
         'title': 'RDS Latency'
+      }
+    });
+    widgets.push({
+      type: 'metric',
+      properties: {
+        metrics: [
+          [ "AWS/RDS", "Queries", "DBClusterIdentifier", event.ResourceProperties.RdsClusterName, { "stat": "Maximum", "label": "All", "yAxis": "right" } ],
+          [ ".", "SelectThroughput", ".", ".", { "stat": "Maximum", "label": "Select" } ],
+          [ ".", "InsertThroughput", ".", ".", { "stat": "Maximum", "label": "Insert" } ],
+          [ ".", "UpdateThroughput", ".", ".", { "stat": "Maximum", "label": "Update" } ],
+          [ ".", "DeleteThroughput", ".", ".", { "stat": "Maximum", "label": "Delete" } ]
+        ],
+        'view': 'timeSeries',
+        'stacked': false,
+        region: event.ResourceProperties.Region,
+        'title': 'RDS Queries (per second)'
       }
     });
   }
