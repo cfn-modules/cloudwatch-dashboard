@@ -1,15 +1,15 @@
 {
   "private": true,
   "dependencies": {
-    "eslint": "5.16.0",
-    "ava": "2.2.0",
+    "eslint": "6.2.2",
+    "ava": "2.3.0",
     "@cfn-modules/test": "0.5.1",
     "@cfn-modules/vpc": "1.1.1",
     "@cfn-modules/client-sg": "1.0.0",
     "@cfn-modules/kms-key": "1.2.0",
     "@cfn-modules/ecs-cluster": "1.1.0",
-    "@cfn-modules/fargate-service": "2.3.0",
-    "@cfn-modules/alb": "1.0.3",
+    "@cfn-modules/fargate-service": "2.4.0",
+    "@cfn-modules/alb": "1.0.4",
     "@cfn-modules/alb-listener": "1.0.0",
     "@cfn-modules/rds-aurora-serverless": "1.5.0",
     "@cfn-modules/cloudwatch-dashboard": "file:../"

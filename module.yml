@@ -14,7 +14,7 @@
 # limitations under the License.
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'cfn-modules: CloudWatch Dashboard'
-# cfn-modules:implements(ExposeArn)
+# cfn-modules:implements()
 Parameters:
   DashboardName:
     Description: 'The name for the dashboard'
@@ -71,6 +71,6 @@ Outputs:
   ModuleId:
     Value: 'cloudwatch-dashboard'
   ModuleVersion:
-    Value: '1.0.0'
+    Value: '1.1.0'
   StackName:
     Value: !Ref 'AWS::StackName'
