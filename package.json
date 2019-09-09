@@ -1,6 +1,6 @@
 {
   "name": "@cfn-modules/cloudwatch-dashboard",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CloudWatch dashboard for ALB, Fargate Service, and RDS Aurora Serverless",
   "author": "Andreas Wittig <andreas@widdix.de>",
   "license": "Apache-2.0",
