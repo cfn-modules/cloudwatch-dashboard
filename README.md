@@ -49,7 +49,7 @@ Resources:
       <td>The name for the dashboard</td>
       <td></td>
       <td>yes</td>
-      <td></td>
+      <td>Only A-Z, a-z, 0-9, -, and _ are supported. Max 255 characters.</td>
     </tr>
     <tr>
       <td>AlbModule</td>

@@ -1,0 +1,10 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'cfn-modules test'
+Resources:
+  Dashboard:
+    Type: 'AWS::CloudFormation::Stack'
+    Properties:
+      Parameters:
+        DashboardName: '!Invalid!'
+      TemplateURL: './node_modules/@cfn-modules/cloudwatch-dashboard/module.yml'
