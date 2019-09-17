@@ -19,6 +19,8 @@ Parameters:
   DashboardName:
     Description: 'The name for the dashboard'
     Type: String
+    AllowedPattern: '^([A-Za-z0-9-_]){1,255}$'
+    ConstraintDescription: 'Only A-Z, a-z, 0-9, -, and _ are supported. Max 255 characters.'
   AlbModule:
     Description: 'Optional stack name of the alb module.'
     Type: String

@@ -11,3 +11,16 @@ test('defaults', async t => {
     t.pass();
   }
 });
+
+test('invalid dashboard name', async t => {
+  const stackName = cfntest.stackName();
+  try {
+    t.log(await cfntest.createStack(`${__dirname}/invalid-dashboard-name.yml`, stackName, {}));
+    // what could we test here?
+    t.log(await cfntest.deleteStack(stackName));
+    t.fail();
+  } catch (e) {
+    t.log(await cfntest.deleteStack(stackName));
+    t.pass();
+  }
+});
