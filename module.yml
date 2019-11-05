@@ -52,7 +52,7 @@ Resources:
     Properties:
       Parameters:
         Handler: 'dashboard.handler'
-        Runtime: 'nodejs8.10'
+        Runtime: 'nodejs10.x'
         Timeout: '30'
         ManagedPolicyArns: !Ref CloudWatchDashboardPolicy
       TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
