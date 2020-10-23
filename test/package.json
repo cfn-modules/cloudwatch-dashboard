@@ -10,8 +10,8 @@
     "@cfn-modules/ecs-cluster": "1.1.0",
     "@cfn-modules/fargate-service": "2.7.0",
     "@cfn-modules/alb": "1.0.4",
-    "@cfn-modules/alb-listener": "1.1.0",
-    "@cfn-modules/rds-aurora-serverless": "1.5.1",
+    "@cfn-modules/alb-listener": "1.2.0",
+    "@cfn-modules/rds-aurora-serverless": "1.6.0",
     "@cfn-modules/cloudwatch-dashboard": "file:../"
   },
   "scripts": {
