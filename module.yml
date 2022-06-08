@@ -54,7 +54,7 @@ Resources:
     Properties:
       Parameters:
         Handler: 'dashboard.handler'
-        Runtime: 'nodejs14.x'
+        Runtime: 'nodejs16.x'
         Timeout: '30'
         ManagedPolicyArns: !Ref CloudWatchDashboardPolicy
       TemplateURL: './node_modules/@cfn-modules/lambda-function/module.yml'
@@ -73,6 +73,6 @@ Outputs:
   ModuleId:
     Value: 'cloudwatch-dashboard'
   ModuleVersion:
-    Value: '1.5.0'
+    Value: '1.6.0'
   StackName:
     Value: !Ref 'AWS::StackName'
