@@ -19,5 +19,5 @@ jobs:
     - name: test
       run: |
         npm ci
-        npm test
+        CFN_PACKAGE_BUCKET_NAME=cf-templates-1a2zmgbg9ut4o-eu-west-1 npm test
       working-directory: test
