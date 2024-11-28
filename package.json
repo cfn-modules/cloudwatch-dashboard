@@ -13,5 +13,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/cfn-modules/cloudwatch-dashboard.git"
+  },
+  "dependencies": {
+    "@cfn-modules/lambda-function": "^2.10.0"
   }
 }
