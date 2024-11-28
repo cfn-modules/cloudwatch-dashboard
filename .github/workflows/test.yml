@@ -1,0 +1,22 @@
+name: Test
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ['hyperenv', 'medium-eu-west-1']
+    steps:
+    - uses: 'actions/checkout@v2'
+    - uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: 'arn:aws:iam::068189904525:role/github-openid-connect'
+        role-session-name: 'cfn-modules/cloudwatch-dashboard'
+        aws-region: 'eu-west-1'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+    - name: test
+      run: |
+        npm ci
+        npm test
+      working-directory: test
