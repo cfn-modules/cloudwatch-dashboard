@@ -12,7 +12,6 @@ jobs:
     - uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: 'arn:aws:iam::068189904525:role/github-openid-connect'
-        role-session-name: 'cfn-modules/cloudwatch-dashboard'
         aws-region: 'eu-west-1'
     - uses: actions/setup-node@v4
       with:
