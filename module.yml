@@ -76,3 +76,4 @@ Outputs:
     Value: '1.6.0'
   StackName:
     Value: !Ref 'AWS::StackName'
+
