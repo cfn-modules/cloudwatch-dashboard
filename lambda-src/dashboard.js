@@ -173,21 +173,19 @@ exports.handler = async (event, context, cb) => {
     if (event.RequestType === 'Delete') {
       await cloudwatch.send(new DeleteDashboardsCommand({DashboardNames: [event.ResourceProperties.DashboardName]}));
       console.log(`Deleted dashboard ${event.ResourceProperties.DashboardName}.`);
-      cfnCustomResourceSuccess(context, event.ResourceProperties.DashboardName);
+      cfnCustomResourceSuccess(event, event.ResourceProperties.DashboardName);
     } else if (event.RequestType === 'Create' || event.RequestType === 'Update') {
       await cloudwatch.send(new PutDashboardCommand({
         DashboardName: event.ResourceProperties.DashboardName,
         DashboardBody: JSON.stringify(generateDashboard(event))
       }));
       console.log(`Created/Updated dashboard ${event.ResourceProperties.DashboardName}.`);
-      cfnCustomResourceSuccess(context, event.ResourceProperties.DashboardName);
-      response.send(event, context, response.SUCCESS, {}, event.ResourceProperties.DashboardName);
+      cfnCustomResourceSuccess(event, event.ResourceProperties.DashboardName);
     } else {
       error(new Error(`unsupported request type: ${event.RequestType}`));
     }
   } catch(e) {
-      console.log('Error', err);
-      response.send(event, context, response.FAILED);
-      cfnCustomResourceFailed(context, event.ResourceProperties.DashboardName, err);
+      console.log('Error', e);
+      cfnCustomResourceFailed(event, event.ResourceProperties.DashboardName, e);
   }
 };
