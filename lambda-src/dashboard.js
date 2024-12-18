@@ -1,6 +1,49 @@
-const AWS = require('aws-sdk');
-const cloudwatch = new AWS.CloudWatch({apiVersion: '2010-08-01'});
-const response = require('cfn-response');
+const { CloudWatchClient, PutDashboardCommand, DeleteDashboardsCommand } = require('@aws-sdk/client-cloudwatch');
+const cloudwatch = new CloudWatchClient({apiVersion: '2010-08-01'});
+
+async function cfnCustomResourceSuccess(event, physicalResourceId, optionalData) {
+  const response = await fetch(event.ResponseURL, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      Status: 'SUCCESS',
+      PhysicalResourceId: physicalResourceId,
+      StackId: event.StackId,
+      RequestId: event.RequestId,
+      LogicalResourceId: event.LogicalResourceId,
+      ...(optionalData !== undefined && {Data: optionalData})
+    })
+  });
+  if (response.status !== 200) {
+    console.log('response status', response.status);
+    console.log('response', await response.text());
+    throw new Error('unexpected status code');
+  }
+}
+
+async function cfnCustomResourceFailed(event, physicalResourceId, optionalReason) {
+  const response = await fetch(event.ResponseURL, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      Status: 'FAILED',
+      ...(optionalReason !== undefined && {Reason: optionalReason}),
+      PhysicalResourceId: (physicalResourceId === undefined || physicalResourceId === null) ? event.LogicalResourceId : physicalResourceId, // physicalResourceId might not be available if create fails 
+      StackId: event.StackId,
+      RequestId: event.RequestId,
+      LogicalResourceId: event.LogicalResourceId
+    })
+  });
+  if (response.status !== 200) {
+    console.log('response status', response.status);
+    console.log('response', await response.text());
+    throw new Error('unexpected status code');
+  }
+}
 
 function generateDashboard(event) {
   let widgets = [];
@@ -124,33 +167,27 @@ function generateDashboard(event) {
   return dashboard;
 }
 
-exports.handler = (event, context, cb) => {
+exports.handler = async (event, context, cb) => {
   console.log(`Executing function with event: ${JSON.stringify(event)}`);
-  const error = (err) => {
-    console.log('Error', err);
-    response.send(event, context, response.FAILED);
-  };
-  if (event.RequestType === 'Delete') {
-    cloudwatch.deleteDashboards({DashboardNames: [event.ResourceProperties.DashboardName]}, function(err) {
-      if (err) {
-        error(err);
-      } else {
-        response.send(event, context, response.SUCCESS, {}, event.ResourceProperties.DashboardName);
-      }
-    });
-  } else if (event.RequestType === 'Create' || event.RequestType === 'Update') {
-    cloudwatch.putDashboard({
-      DashboardName: event.ResourceProperties.DashboardName,
-      DashboardBody: JSON.stringify(generateDashboard(event))
-    }, function(err) {
-      if (err) {
-        error(err);
-      } else {
-        console.log(`Created/Updated dashboard ${event.ResourceProperties.DashboardName}.`);
-        response.send(event, context, response.SUCCESS, {}, event.ResourceProperties.DashboardName);
-      }
-    });
-  } else {
-    error(new Error(`unsupported request type: ${event.RequestType}`));
+  try {  
+    if (event.RequestType === 'Delete') {
+      await cloudwatch.send(new DeleteDashboardsCommand({DashboardNames: [event.ResourceProperties.DashboardName]}));
+      console.log(`Deleted dashboard ${event.ResourceProperties.DashboardName}.`);
+      cfnCustomResourceSuccess(context, event.ResourceProperties.DashboardName);
+    } else if (event.RequestType === 'Create' || event.RequestType === 'Update') {
+      await cloudwatch.send(new PutDashboardCommand({
+        DashboardName: event.ResourceProperties.DashboardName,
+        DashboardBody: JSON.stringify(generateDashboard(event))
+      }));
+      console.log(`Created/Updated dashboard ${event.ResourceProperties.DashboardName}.`);
+      cfnCustomResourceSuccess(context, event.ResourceProperties.DashboardName);
+      response.send(event, context, response.SUCCESS, {}, event.ResourceProperties.DashboardName);
+    } else {
+      error(new Error(`unsupported request type: ${event.RequestType}`));
+    }
+  } catch(e) {
+      console.log('Error', err);
+      response.send(event, context, response.FAILED);
+      cfnCustomResourceFailed(context, event.ResourceProperties.DashboardName, err);
   }
 };
