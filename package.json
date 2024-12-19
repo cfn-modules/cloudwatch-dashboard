@@ -1,11 +1,15 @@
 {
   "name": "@cfn-modules/cloudwatch-dashboard",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "CloudWatch dashboard for ALB, Fargate Service, and RDS Aurora Serverless",
   "author": "Andreas Wittig <andreas@widdix.de>",
   "license": "Apache-2.0",
-  "bundledDependencies": ["@cfn-modules/lambda-function"],
-  "keywords": ["cfn-modules"],
+  "bundledDependencies": [
+    "@cfn-modules/lambda-function"
+  ],
+  "keywords": [
+    "cfn-modules"
+  ],
   "homepage": "https://github.com/cfn-modules",
   "bugs": {
     "url": "https://github.com/cfn-modules/cloudwatch-dashboard/issues"
