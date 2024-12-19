@@ -73,6 +73,6 @@ Outputs:
   ModuleId:
     Value: 'cloudwatch-dashboard'
   ModuleVersion:
-    Value: '1.6.0'
+    Value: '1.7.0'
   StackName:
     Value: !Ref 'AWS::StackName'
